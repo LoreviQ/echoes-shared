@@ -1,0 +1,1 @@
+Shared operations used in both frontend and backend for Echoes-ai

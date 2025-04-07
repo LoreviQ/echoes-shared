@@ -21,8 +21,10 @@ export type Character = CharacterSchema & {
     subscriber_count: number;
 }
 
-// Type for updating a character - allows any subset of fields except protected ones
-export type UpdateCharacter = Partial<Omit<
+// Type for creating or updating a character - allows any subset of fields except protected ones
+export type PartialCharacter = Partial<Omit<
     CharacterSchema,
     'id' | 'created_at' | 'updated_at' | 'user_id'
 >>;
+
+export type NsfwFilter = 'show' | 'blur' | 'hide';

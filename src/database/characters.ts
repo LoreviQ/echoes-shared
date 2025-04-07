@@ -2,12 +2,20 @@ import { PostgrestError, SupabaseClient } from "@supabase/supabase-js";
 
 import { Character, PartialCharacter, CharacterSchema, NsfwFilter } from "../types";
 
+/**
+ * Type for characters with subscription counts
+ */
 type CharacterWithSubscriptionCount = CharacterSchema & {
     character_subscription_counts?: {
         subscriber_count: number;
     }[] | null;
 }
 
+/**
+ * Transforms character data
+ * @param data - The character data to transform
+ * @returns The transformed character data
+ */
 function transformCharacterData(data: CharacterWithSubscriptionCount | null): Character | null {
     if (!data) return null;
 
@@ -17,6 +25,12 @@ function transformCharacterData(data: CharacterWithSubscriptionCount | null): Ch
     };
 }
 
+/**
+ * Gets a character from the database
+ * @param id - The ID of the character to get
+ * @param supabase - The Supabase client to use
+ * @returns A promise that resolves to the character and an error
+ */
 export async function getCharacter(
     id: string,
     supabase: SupabaseClient
@@ -34,6 +48,12 @@ export async function getCharacter(
     return { character: transformCharacterData(data), error };
 }
 
+/**
+ * Gets a character from the database by path
+ * @param path - The path of the character to get
+ * @param supabase - The Supabase client to use
+ * @returns A promise that resolves to the character and an error
+ */
 export async function getCharacterByPath(
     path: string,
     supabase: SupabaseClient
@@ -52,6 +72,12 @@ export async function getCharacterByPath(
     return { character: transformCharacterData(data), error };
 }
 
+/**
+ * Gets all characters from the database
+ * @param nsfwFilter - The nsfw filter to apply
+ * @param supabase - The Supabase client to use
+ * @returns A promise that resolves to the characters and an error
+ */
 export async function getCharacters(
     nsfwFilter: NsfwFilter = 'hide',
     supabase: SupabaseClient
@@ -80,7 +106,7 @@ export async function getCharacters(
 /**
  * Inserts a new character into the database (user_id is automatically logged in user due to supabase function triggers)
  * @param character - The character to insert
- * @param client - The Supabase client to use
+ * @param supabase - The Supabase client to use
  * @returns A promise that resolves to the error or null
  */
 export async function insertCharacter(
@@ -99,7 +125,7 @@ export async function insertCharacter(
  * Updates any fields of a character in the database
  * @param id - The ID of the character to update
  * @param updates - Partial object containing any character fields to update
- * @param client - Optional Supabase client
+ * @param supabase - The Supabase client to use
  */
 export async function updateCharacter(
     id: string,

@@ -26,5 +26,3 @@ export type PartialCharacter = Partial<Omit<
     CharacterSchema,
     'id' | 'created_at' | 'updated_at' | 'user_id'
 >>;
-
-export type NsfwFilter = 'show' | 'blur' | 'hide';

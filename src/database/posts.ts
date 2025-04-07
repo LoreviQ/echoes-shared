@@ -1,6 +1,6 @@
 import { PostgrestError, SupabaseClient } from "@supabase/supabase-js";
 
-import { Post } from "../types";
+import { PostSchema } from "../types";
 
 /**
  * Gets a post from the database
@@ -11,7 +11,7 @@ import { Post } from "../types";
 export async function getPost(
     id: string,
     supabase: SupabaseClient
-): Promise<{ post: Post | null; error: PostgrestError | null }> {
+): Promise<{ post: PostSchema | null; error: PostgrestError | null }> {
     const { data, error } = await supabase
         .from('posts')
         .select('*')
@@ -29,7 +29,7 @@ export async function getPost(
 export async function getPostsByCharacterId(
     id: string,
     supabase: SupabaseClient
-): Promise<{ posts: Post[]; error: PostgrestError | null }> {
+): Promise<{ posts: PostSchema[]; error: PostgrestError | null }> {
     const { data, error } = await supabase
         .from('posts')
         .select('*')

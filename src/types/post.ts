@@ -1,4 +1,4 @@
-export type Post = {
+export type PostSchema = {
     id: string;
     character_id: string;
     content: string;

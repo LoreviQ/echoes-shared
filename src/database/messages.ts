@@ -1,6 +1,6 @@
 import { PostgrestError, SupabaseClient } from "@supabase/supabase-js";
 
-import { Message, CreateMessage } from '../types';
+import { MessageSchema, CreateMessage } from '../types';
 
 /**
  * Get all messages for a thread
@@ -8,7 +8,7 @@ import { Message, CreateMessage } from '../types';
  * @param supabase - The Supabase client to use
  * @returns A promise that resolves to an object containing the messages and an error
  */
-export async function getMessages(threadId: string, supabase: SupabaseClient): Promise<{ messages: Message[], error: PostgrestError | null }> {
+export async function getMessages(threadId: string, supabase: SupabaseClient): Promise<{ messages: MessageSchema[], error: PostgrestError | null }> {
     const { data, error } = await supabase
         .from('messages')
         .select('*')
@@ -23,7 +23,7 @@ export async function getMessages(threadId: string, supabase: SupabaseClient): P
  * @param supabase - The Supabase client to use
  * @returns A promise that resolves to the created message and an error
  */
-export async function insertMessage(message: CreateMessage, supabase: SupabaseClient): Promise<{ message: Message, error: PostgrestError | null }> {
+export async function insertMessage(message: CreateMessage, supabase: SupabaseClient): Promise<{ message: MessageSchema, error: PostgrestError | null }> {
     const { data, error } = await supabase
         .from('messages')
         .insert(message)
@@ -41,7 +41,7 @@ export async function insertMessage(message: CreateMessage, supabase: SupabaseCl
  */
 export function createMessageSubscription(
     threadId: string,
-    onMessage: (payload: { new: Message }) => void,
+    onMessage: (payload: { new: MessageSchema }) => void,
     supabase: SupabaseClient
 ) {
     return supabase

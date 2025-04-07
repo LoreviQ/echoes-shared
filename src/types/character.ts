@@ -26,3 +26,6 @@ export type PartialCharacter = Partial<Omit<
     CharacterSchema,
     'id' | 'created_at' | 'updated_at' | 'user_id'
 >>;
+
+// Type for generating a character with AI
+export type GeneratedCharacter = Pick<CharacterSchema, 'name' | 'gender' | 'description' | 'bio' | 'nsfw' | 'appearance'>;

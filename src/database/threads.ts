@@ -3,6 +3,17 @@ import { PostgrestError, SupabaseClient } from "@supabase/supabase-js";
 import { ThreadSchema, CreateThread } from '../types';
 
 /**
+ * Get a thread by id
+ * @param threadId - The ID of the thread to get
+ * @param supabase - The Supabase client to use
+ * @returns A promise that resolves to the thread and an error
+ */
+export async function getThread(threadId: string, supabase: SupabaseClient): Promise<{ thread: ThreadSchema, error: PostgrestError | null }> {
+    const { data, error } = await supabase.from('threads').select('*').eq('id', threadId).single();
+    return { thread: data, error };
+}
+
+/**
  * Get all threads for a character
  * @param characterId - The ID of the character to get threads for
  * @param supabase - The Supabase client to use

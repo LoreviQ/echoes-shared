@@ -4,4 +4,7 @@ export type PostSchema = {
     content: string;
     created_at: string;
     updated_at: string;
-} 
+}
+
+// partial post for database operations
+export type PartialPost = Partial<Omit<PostSchema, 'id' | 'created_at' | 'updated_at'>>;

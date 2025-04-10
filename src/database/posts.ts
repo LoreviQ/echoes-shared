@@ -1,6 +1,6 @@
 import { PostgrestError, SupabaseClient } from "@supabase/supabase-js";
 
-import { PostSchema } from "../types";
+import { PartialPost, PostSchema } from "../types";
 
 /**
  * Gets a post from the database
@@ -36,4 +36,18 @@ export async function getPostsByCharacterId(
         .eq('character_id', id)
         .order('created_at', { ascending: false });
     return { posts: data || [], error };
+}
+
+/**
+ * Creates a post
+ * @param post - The post to create
+ * @param supabase - The Supabase client to use
+ * @returns A promise that resolves to the created post and an error
+ */
+export async function createPost(
+    post: PartialPost,
+    supabase: SupabaseClient
+): Promise<{ post: PostSchema, error: PostgrestError | null }> {
+    const { data, error } = await supabase.from('posts').insert(post).select().single();
+    return { post: data, error };
 }
